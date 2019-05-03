@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  {% load static %}
+
+  <title>Pur Beurre</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="{% static "purbeurre/img/logo_pur_beurre-favicon.png" %}" />
+
+  <!-- Font Awesome Icons -->
+  <link href="{% static "purbeurre/vendor/fontawesome-free/css/all.min.css" %}" rel="stylesheet" type="text/css">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700" rel="stylesheet">
+  <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic' rel='stylesheet' type='text/css'>
+
+  <!-- PurBeurre Fonts -->
+  <link href="http://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css">
+  <link href="http://fonts.googleapis.com/css?family=Scope+One" rel="stylesheet" type="text/css">
+  
+  <!-- Plugin CSS -->
+  <link href="{% static "purbeurre/vendor/magnific-popup/magnific-popup.css" %}" rel="stylesheet">
+
+  <!-- Theme CSS - Includes Bootstrap -->
+  <link href="{% static "purbeurre/css/creative.min.css" %}" rel="stylesheet">
+  <link href="{% static "purbeurre/css/pb_style.css" %}" rel="stylesheet">
+
+</head>
+
+<body id="page-top">
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
+    <div class="container align-items-center">
+      <div class="row align-items-center">
+        <div class="col-sm-2">
+          <img class="img-nav logo" src='{% static "purbeurre/img/logo_pur_beurre.png" %}' alt="logo" height="50px">
+        </div>
+        <div class="col-sm-3 offset-col-1">
+          <a class="navbar-brand js-scroll-trigger" href="{% url 'purbeurre:accueil' %}">Pur Beurre</a>
+        </div>
+      </div>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto my-2 my-lg-0 align-items-center">
+          <li class="nav-item">
+              <form id="formnav" class="form-inline" action="{% url 'purbeurre:substitutes' %}" method="post">
+                {% csrf_token %}
+                <div class="form-group text-center">
+                    <input id="textnav" type="text" name = "product" class="form-control col-md-10" placeholder="Chercher">
+                </div>
+              </form>
+          </li>
+
+          <li class="nav-item">
+            {% if user.is_authenticated %}
+            <a class="nav-link js-scroll-trigger" href="{% url 'purbeurre:account' %}">
+              <img class="img-nav" src='{% static "purbeurre/img/user-regular.svg" %}' alt="" title="Mon compte" height="20px">
+            </a>
+            {% else %}
+            <a class="nav-link js-scroll-trigger" href="{% url 'purbeurre:sign_up' %}">
+                <img class="img-nav" src='{% static "purbeurre/img/user-circle-regular.svg" %}' alt="" title="Créer un compte" height="20px">
+            </a>
+            {% endif %}
+          </li>
+
+
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="{% url 'purbeurre:my_substitutes' %}">
+              <img class="img-nav" src='{% static "purbeurre/img/noun_Carrot.svg" %}' alt="" title="Mes produits enregistrés" height="30px">
+            </a>
+          </li>
+          <li class="nav-item">
+            {% if user.is_authenticated %}
+            <a class="nav-link js-scroll-trigger" href="{% url 'purbeurre:logout' %}">
+              <img class="img-nav" src='{% static "purbeurre/img/sign-out-alt-solid.svg" %}' alt="" title="Me déconnecter" height="20px">
+            </a>
+            {% else %}
+            <a class="nav-link js-scroll-trigger" href="{% url 'purbeurre:login' %}">
+              <img class="img-nav" src='{% static "purbeurre/img/sign-in-alt-solid.svg" %}' alt="" title="Me connecter" height="20px">
+            </a>
+            {% endif %}
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  {% block content %}{% endblock %}
+
+  <!-- Footer -->
+  <footer class="bg-light py-5">
+    <div class="container">
+      <div class="row">
+        <div class="offset-md-1 col-md-4">
+          <div class="small text-center text-muted">
+            <a href="{% url 'purbeurre:legals' %}">
+              Mentions légales
+            </a>
+          </div>
+        </div>
+        <div class="offset-md-2 col-md-4">
+          <div class="small text-center text-muted">
+            <a id="go-contact" href="/#contact" data-scroll="contact">Contact</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="{% static "purbeurre/vendor/jquery/jquery.min.js" %}"></script>
+  <script src="{% static "purbeurre/vendor/bootstrap/js/bootstrap.bundle.min.js" %}"></script>
+
+  <!-- Plugin JavaScript -->
+  <script src="{% static "purbeurre/vendor/jquery-easing/jquery.easing.min.js" %}"></script>
+  <script src="{% static "purbeurre/vendor/magnific-popup/jquery.magnific-popup.min.js" %}"></script>
+
+  <!-- Custom scripts for this template -->
+  <script src="{% static "purbeurre/js/creative.min.js" %}"></script>
+  <script src="{% static "purbeurre/js/purbeurre.js" %}"></script>
+
+</body>
+
+</html>

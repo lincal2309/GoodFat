@@ -1,0 +1,82 @@
+{% load static %}
+
+<section class="page-section bg-main" id="about">
+    <div class="container">
+        <div class="row justify-content-center">
+
+            {% if substitute_list.has_previous %}
+            <aside class="text-center">
+                <a href="{% url 'purbeurre:substitutes' product.code substitute_list.previous_page_number %}">
+                    <img class="img-fluid img-pgn-left" src='{% static "purbeurre/img/angle-left.svg" %}' alt="" height="100px">
+                </a>
+            </aside>
+            {% elif substitute_list.paginator.num_pages > 1 %}
+            <aside class="text-center">
+                <a href="{% url 'purbeurre:substitutes' product.code substitute_list.paginator.num_pages %}">
+                    <img class="img-fluid img-pgn-left" src='{% static "purbeurre/img/angle-left.svg" %}' alt="" height="100px">
+                </a>
+            </aside>
+            {% endif %}
+
+
+            <div class="card-deck bg-transparent">
+
+            {% for substitute in substitute_list %}
+                <div class="card mb-4 bg-card text-center">
+                    <div class="etiquette">
+                        <h1 class="etiquette-label">{{ substitute.nutrition_grade|upper }}</h1>
+                    </div>
+                    <a href="{% url 'purbeurre:substitute' substitute.id %}">
+                        <div  class="card-title img-card text-center" style="background-image:url('{{ substitute.img_url }}')")>
+                        </div>
+                    </a>
+                    <div class="card-body bg-transparent border-bottom-0">
+                        <h3><a href="{% url 'purbeurre:substitute' substitute.id %}">{{ substitute.name }}</a></h3>
+                    </div>
+
+                    {% if suggest %}
+                    <div class="card-footer bg-transparent border-top-0">
+
+                        <form id="form" class="form-inline justify-content-center user-form" action="{% url 'purbeurre:save_substitute' substitute_list.number %}" method="post">
+                            {% csrf_token %}
+                            <div hidden>
+                                <input type="text" name="product" class="form-control" value="{{ product.code }}">
+                                <input type="text" name="subst" class="form-control" value="{{ substitute.code }}">
+                            </div>
+                            <div class="form-group text-center">
+                                <button class="btn btn-main" type="submit"><i class="far fa-save"></i> Enregistrer</button>
+                            </div>
+                        </form>
+                    </div>
+                    {% endif %}
+
+                </div>
+                {% if forloop.counter|divisibleby:3 %}
+                    <div class="w-100 d-none d-lg-block"><!-- wrap every 3 cards on large screens --></div>
+                {% endif %}
+                {% if forloop.counter|divisibleby:2 %}
+                    <div class="w-100 d-none d-md-block d-lg-none"><!-- wrap every 2 cards on medium screens --></div>
+                {% endif %}
+                <div class="w-100 d-none d-sm-block d-md-none"><!-- 1 card per row on small screens --></div>
+            {% endfor %}
+
+            </div>
+
+            {% if substitute_list.has_next %}
+            <aside class="text-center">
+                <a href="{% url 'purbeurre:substitutes' product.code substitute_list.next_page_number %}">
+                    <img class="img-fluid img-pgn-right" src='{% static "purbeurre/img/angle-right.svg" %}' alt="" height="100px">
+                </a>
+            </aside>
+            {% elif substitute_list.paginator.num_pages > 1 %}
+            <aside class="text-center">
+                <a href="{% url 'purbeurre:substitutes' product.code 1 %}">
+                    <img class="img-fluid img-pgn-right" src='{% static "purbeurre/img/angle-right.svg" %}' alt="" height="100px">
+                </a>
+            </aside>
+            {% endif %}
+
+        </div>
+
+    </div>
+</section>

@@ -1,0 +1,229 @@
+/* Pur Beurre's website style sheet */
+
+/* Site fonts */
+:root {
+    font-family: "Scope One", sans-serif;
+}
+
+html {
+    font-family: "Scope One", sans-serif;
+}
+
+body {
+    font-family: "Scope One", sans-serif;
+    font-size: 1.2rem;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: "Open Sans", sans-serif;
+}
+
+
+/* Overrides site colors */
+hr.divider {
+    max-width: 3.25rem;
+    border-width: 0.2rem;
+    border-color: #de9440;
+}
+
+.btn-main {
+    color: #fff;
+    background-color: #e8a75d;
+    border-color: #e8a75d;
+}
+
+.btn-main:hover {
+    color: #fff;
+    background-color: #de9440;
+    border-color: #e8a75d;
+}
+
+.btn-main:focus, .btn-main.focus {
+    -webkit-box-shadow: 0 0 0 0.2rem rgba(246, 122, 88, 0.5);
+    box-shadow: 0 0 0 0.2rem rgba(246, 122, 88, 0.5);
+}
+
+.bg-main {
+    background-color: #c45525 !important;
+}
+
+.bg-card {
+    background-color: #e8a75d !important;
+}
+
+.img-card {
+    height: 300px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+
+a {
+    color: #86ebe6;
+    text-decoration: none;
+    background-color: transparent;
+}
+
+a:hover {
+    color: #345a61;
+    text-decoration: underline dotted;
+}
+
+
+/* Define background image using theme's properties */
+header.masthead {
+    padding-top: 10rem;
+    padding-bottom: calc(10rem - 72px);
+    background: -webkit-gradient(linear, left top, left bottom, from(rgba(92, 77, 66, 0.8)), to(rgba(92, 77, 66, 0.8))), url("../img/olenka-kotyk-25355-unsplash.jpg");
+    background: linear-gradient(to bottom, rgba(92, 77, 66, 0.8) 0%, rgba(92, 77, 66, 0.8) 100%), url("../img/olenka-kotyk-25355-unsplash.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-size: cover;
+}
+
+/* Max height for icons in navbar */
+.img-nav {
+    /* max-width: 100%; */
+    max-height: 50px;
+}
+
+/* Placeholers' text format */
+.form-control::placeholder {
+    opacity: 0.4;
+    font-style: italic;
+}
+
+.navbar-brand {
+    margin-left: 20px;
+}
+
+/* Product thumnails */
+.img-prod {
+    max-width: 100%;
+    width: auto;
+    max-height: 300px;
+}
+
+
+/* Presentation session responsive display management */
+/* Switches flexboxes from row to column when media size is big enough
+    to ensure each image is under related text */
+
+@media (min-width: 576px) {
+    .about-v {
+        flex-direction: row;
+    }
+
+    .about-h {
+        flex-direction: row;
+    }
+
+}
+  
+@media (min-width: 768px) {
+    .card {
+        max-width: 45%;
+    }
+
+      .about-v {
+        flex-direction: column;
+    }
+
+    .about-h {
+        flex-direction: row;
+    }
+
+}
+ 
+@media (min-width: 992px) {
+    header.mh-50 {
+        /* Displays the header image on half page instead of full page */
+        height: 50vh;
+        min-height: 20rem;
+        padding-top: 72px;
+        padding-bottom: 0;
+    }
+}
+    
+@media (min-width: 1200px) {
+    .card {
+        max-width: 30%;
+    }
+}
+
+/* Manages nutrition score thubnail dispolay */
+.card {
+    position: relative;
+}
+
+.etiquette{
+    position: absolute;
+    top: -20px;
+    right: -20px;
+    width: 75px;
+    height: 75px;
+    border-radius: 40px;
+    font-family: Trebuchet MS;
+    background: -webkit-linear-gradient(#345a61,#86ebe6);
+    background: -moz-linear-gradient(#345a61,#86ebe6);
+    background: -ms-linear-gradient(#345a61,#86ebe6);
+    background: -o-linear-gradient(#345a61,#86ebe6);
+    background: linear-gradient(#345a61,#86ebe6);
+    box-shadow: 2px 2px 10px #000005;
+    -moz-transform:rotate(45deg);
+    -webkit-transform:rotate(45deg);
+    transform:rotate(45deg);
+}
+
+.etiquette h1{
+    margin:20%;
+    font-size: 35px;
+    font-weight: normal;
+    color: #fff;
+    text-shadow: 1px 1px 0 #777;
+    -moz-transform:rotate(-45deg);
+    -webkit-transform:rotate(-45deg);
+    transform:rotate(-45deg);
+}
+
+/* Manage space for card-deck and pagination images */
+.card-deck {
+    flex: 8;
+}
+
+aside {
+    flex: 1;
+}
+
+aside img {
+    padding-top: 30vh;
+}
+
+.img-pgn-left,
+.img-pgn-right {
+    opacity: 0.7;
+}
+
+.img-pgn-left {
+    padding-right: 20px;
+}
+
+.img-pgn-right {
+    padding-left: 20px;
+}
+
+.error-msg {
+    color: rgba(255, 255, 255, 0.75);
+    margin-bottom: 50px;
+}
+
+.prod-name {
+    color: rgba(255, 255, 255, 0.75);
+}
+
+.btn-acnt {
+    margin-top: 30px;
+    width: 15%;
+}

@@ -1,0 +1,28 @@
+{% extends './base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<!-- Masthead -->
+<header class="masthead mh-50">
+    <div class="container h-100">
+        <div class="row h-100 align-items-center justify-content-center text-center">
+            <div class="col-lg-10 align-self-center">
+                <h1 class="text-white-75 font-weight-light mb-5">Mes substituts enregistrés</span></h1>
+                {% if no_product %}
+                    <h2 class="text-white-75 font-weight-light mb-5">Vous n'avez enregistré aucun produit</span></h2>
+                {% else %}
+                    <h2 class="text-white-75 font-weight-light mb-5">{{ nb_products }} produit{{ nb_products|pluralize }}</span></h2>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Presentation Section -->
+{% if not no_product %}
+    {% include './display_prod_list.html' %}
+{% endif %}
+
+{% endblock %}
