@@ -26,11 +26,13 @@ DEBUG = False
 # SECURITY WARNING: keep the secret key used in production secret!
 if DEBUG == True:
     SECRET_KEY = '%amnse12$z#ph#5hwt3y6jo%la78wjk@g!uj6_afpgry+8ukwb'
+    ALLOWED_HOSTS = []
 else:
     SECRET_KEY = os.environ['SECRET_KEY']
+    ALLOWED_HOSTS = ['purbeurre31.herokuapp.com']
 
 
-ALLOWED_HOSTS = []
+
 
 # Application definition
 
