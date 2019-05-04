@@ -1,1 +1,1 @@
-web: gunicorn goodfat.wsgi
+web: gunicorn goodfat.goodfat.wsgi
