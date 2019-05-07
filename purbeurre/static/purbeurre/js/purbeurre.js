@@ -1,11 +1,10 @@
 
 $(document).ready(function(event) {
-    // Reset input text fields and give focus to main put field
+    // Reset input text fields
     // Do NOT use $('input') to reset all fields with one single command 
     //  as it would also reset hidden fields used for CSRF protection
     $('#text').val('');
     $('#textnav').val('');
-    $('#text').focus();
 });
 
 
@@ -31,10 +30,3 @@ $('#back').on('click', function(event) {
     event.preventDefault();
     history.back();
 });
-
-$('#contact').on('click', function(event) {
-    event.preventDefault();
-    $('html, body').animate({
-        scrollTop: $('/#contact'.data('scroll')).offset().top
-    }, 1000); 
-})
