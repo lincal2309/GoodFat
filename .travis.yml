@@ -1,12 +1,15 @@
+dist: xenial
 language: python
-pyhton:
-  - '3.7'
+python:
+  - "3.7"
+
 
 # safelist
 branches:
   only:
     - staging
 
+# Install pipenv then run it to install Pipfile dependencies
 before_script:
   - pip install pipenv
   - pipenv install
@@ -17,4 +20,4 @@ services:
   - postgresql
 
 script:
-  - ./manage.py test
+  - python manage.py test
