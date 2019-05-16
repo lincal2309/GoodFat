@@ -1,0 +1,20 @@
+language: python
+pyhton:
+  - '3.7'
+
+# safelist
+branches:
+  only:
+    - staging
+
+before_script:
+  - pip install pipenv
+  - pipenv install
+
+env: DJANGO_SETTINGS_MODULE="goodfat.settings.travis"
+
+services:
+  - postgresql
+
+script:
+  - ./manage.py test
