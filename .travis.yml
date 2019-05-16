@@ -9,6 +9,7 @@ branches:
   only:
     - staging
 
+# Install pipenv then run it to install Pipfile dependencies
 before_script:
   - pip install pipenv
   - pipenv install

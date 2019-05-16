@@ -535,3 +535,184 @@ class TestLegals(TestCase):
         response = self.client.get(reverse('purbeurre:legals'))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Mentions légales")
+
+
+class TestRefreshProds(TestCase):
+    @mock.patch('requests.get')
+    def test_refresh_product(self, mock_get_off):
+        # Check product list refresh :
+        #   - remove products if catogory turned 'used'
+        #   - add products from API 
+
+        mock_response = mock.Mock()
+
+        # Expected data returned from API
+        expected_result = {
+            "page": "1",
+            "skip": 0,
+            "products": [
+                {
+                    "ingredients_text_fr": "Eau gazéifiée, sucre, colorant : E150d, acidifiant : acide phosphorique, arômes naturels (extraits végétaux), dont caféine.",
+                    "ingredients_text_with_allergens_fr": "Eau gazéifiée, sucre, colorant : E150d, acidifiant : acide phosphorique, arômes naturels (extraits végétaux), dont caféine.",
+                    "nova_group": "4",
+                    "generic_name_fr": "Soda aux extraits végétaux",
+                    "ingredients_text_with_allergens": "Eau gazéifiée, sucre, colorant : E150d, acidifiant : acide phosphorique, arômes naturels (extraits végétaux), dont caféine.",
+                    "generic_name": "Soda aux extraits végétaux",
+                    "image_url": "https://static.openfoodfacts.org/images/products/544/900/000/0996/front_fr.348.400.jpg",
+                    "nutrition_grades": "e",
+                    "nutrition_grade_fr": "e",
+                    "nutriments": {
+                        "fat_serving": "0",
+                        "sugars_unit": "g",
+                        "fat_unit": "g",
+                        "fat_100g": "0",
+                        "saturated-fat": "0",
+                        "nutrition-score-fr_100g": "14",
+                        "sugars_value": 10.6,
+                        "nova-group": "4",
+                        "sodium_unit": "g",
+                        "saturated-fat_100g": "0",
+                        "fat_value": "0",
+                        "sugars": 10.6,
+                        "fat": "0",
+                        "sugars_serving": "35",
+                        "saturated-fat_value": "0",
+                        "saturated-fat_unit": "g",
+                        "saturated-fat_serving": "0",
+                        "sugars_100g": 10.6
+                    },
+                    "lang": "fr",
+                    "product_name_en": "Coca Cola",
+                    "product_name": "Produit A - Catégorie 1",
+                    "brands": "Coca-Cola",
+                    "categories": "Catégorie 1",
+                    "categories_lc": "fr",
+                    "code": "10",
+                    "ingredients_text": "Eau gazéifiée, sucre, colorant : E150d, acidifiant : acide phosphorique, arômes naturels (extraits végétaux), dont caféine.",
+                    "url": "https://fr.openfoodfacts.org/produit/5449000000996/coca-cola",
+                    "nova_groups": "4",
+                    "product_name_fr": "Coca-Cola",
+                    "image_front_url": "https://static.openfoodfacts.org/images/products/544/900/000/0996/front_fr.348.400.jpg"
+                },
+                {
+                    "ingredients_text_fr": "Eau gazéifiée, sucre, colorant : E150d, acidifiant : acide phosphorique, arômes naturels (extraits végétaux), dont caféine.",
+                    "ingredients_text_with_allergens_fr": "Eau gazéifiée, sucre, colorant : E150d, acidifiant : acide phosphorique, arômes naturels (extraits végétaux), dont caféine.",
+                    "nova_group": "4",
+                    "generic_name_fr": "Soda aux extraits végétaux",
+                    "ingredients_text_with_allergens": "Eau gazéifiée, sucre, colorant : E150d, acidifiant : acide phosphorique, arômes naturels (extraits végétaux), dont caféine.",
+                    "generic_name": "Soda aux extraits végétaux",
+                    "image_url": "https://static.openfoodfacts.org/images/products/544/900/000/0996/front_fr.348.400.jpg",
+                    "nutrition_grades": "e",
+                    "nutrition_grade_fr": "e",
+                    "nutriments": {
+                        "fat_serving": "0",
+                        "sugars_unit": "g",
+                        "fat_unit": "g",
+                        "fat_100g": "0",
+                        "saturated-fat": "0",
+                        "nutrition-score-fr_100g": "14",
+                        "sugars_value": 10.6,
+                        "nova-group": "4",
+                        "sodium_unit": "g",
+                        "saturated-fat_100g": "0",
+                        "fat_value": "0",
+                        "sugars": 10.6,
+                        "fat": "0",
+                        "sugars_serving": "35",
+                        "saturated-fat_value": "0",
+                        "saturated-fat_unit": "g",
+                        "saturated-fat_serving": "0",
+                        "sugars_100g": 10.6
+                    },
+                    "lang": "fr",
+                    "product_name_en": "Coca Cola",
+                    "product_name": "Produit B - Catégorie 1",
+                    "brands": "Coca-Cola",
+                    "categories": "Catégorie 1",
+                    "categories_lc": "fr",
+                    "code": "20",
+                    "ingredients_text": "Eau gazéifiée, sucre, colorant : E150d, acidifiant : acide phosphorique, arômes naturels (extraits végétaux), dont caféine.",
+                    "url": "https://fr.openfoodfacts.org/produit/5449000000996/coca-cola",
+                    "nova_groups": "4",
+                    "product_name_fr": "Coca-Cola",
+                    "image_front_url": "https://static.openfoodfacts.org/images/products/544/900/000/0996/front_fr.348.400.jpg"
+                },
+                {
+                    "ingredients_text_fr": "Eau gazéifiée, sucre, colorant : E150d, acidifiant : acide phosphorique, arômes naturels (extraits végétaux), dont caféine.",
+                    "ingredients_text_with_allergens_fr": "Eau gazéifiée, sucre, colorant : E150d, acidifiant : acide phosphorique, arômes naturels (extraits végétaux), dont caféine.",
+                    "nova_group": "4",
+                    "generic_name_fr": "Soda aux extraits végétaux",
+                    "ingredients_text_with_allergens": "Eau gazéifiée, sucre, colorant : E150d, acidifiant : acide phosphorique, arômes naturels (extraits végétaux), dont caféine.",
+                    "generic_name": "Soda aux extraits végétaux",
+                    "image_url": "https://static.openfoodfacts.org/images/products/544/900/000/0996/front_fr.348.400.jpg",
+                    "nutrition_grades": "e",
+                    "nutrition_grade_fr": "e",
+                    "nutriments": {
+                        "fat_serving": "0",
+                        "sugars_unit": "g",
+                        "fat_unit": "g",
+                        "fat_100g": "0",
+                        "saturated-fat": "0",
+                        "nutrition-score-fr_100g": "14",
+                        "sugars_value": 10.6,
+                        "nova-group": "4",
+                        "sodium_unit": "g",
+                        "saturated-fat_100g": "0",
+                        "fat_value": "0",
+                        "sugars": 10.6,
+                        "fat": "0",
+                        "sugars_serving": "35",
+                        "saturated-fat_value": "0",
+                        "saturated-fat_unit": "g",
+                        "saturated-fat_serving": "0",
+                        "sugars_100g": 10.6
+                    },
+                    "lang": "fr",
+                    "product_name_en": "Coca Cola",
+                    "product_name": "Produit B - Catégorie 2",
+                    "brands": "Coca-Cola",
+                    "categories": "Catégorie 2",
+                    "categories_lc": "fr",
+                    "code": "20",
+                    "ingredients_text": "Eau gazéifiée, sucre, colorant : E150d, acidifiant : acide phosphorique, arômes naturels (extraits végétaux), dont caféine.",
+                    "url": "https://fr.openfoodfacts.org/produit/5449000000996/coca-cola",
+                    "nova_groups": "4",
+                    "product_name_fr": "Coca-Cola",
+                    "image_front_url": "https://static.openfoodfacts.org/images/products/544/900/000/0996/front_fr.348.400.jpg"
+                }                
+                ]
+            }
+        #  Response data from mock
+        mock_response.json.return_value = expected_result
+        mock_response.status_code = 200
+        #  Response from fake API
+        mock_get_off.return_value = mock_response
+
+        # Load fake data into database to test first features of the view
+        c1 = Category.objects.create(name="Catégorie 1", used=True)     # Used category with 1 product : 2 products expected
+        c2 = Category.objects.create(name="Catégorie 2", used=False)    # Unused category with 1 product : no changes expected
+
+        Product.objects.create(code=1, name="Produit 1", description="Description du produit 1",
+            ingredients="Ingrédients du produit 1", nutrition_score = 1, nutrition_grade="a",
+            img_url="http://img.produit1.off.fr/1", off_url="http://code.produit1.off.fr/1",
+            category=c1)
+        Product.objects.create(code=2, name="Produit 2", description="Description du produit 2",
+            ingredients="Ingrédients du produit 2", nutrition_score = 2, nutrition_grade="b",
+            img_url="http://img.produit1.off.fr/2", off_url="http://code.produit1.off.fr/2",
+            category=c2)
+
+
+        # Call the command
+        call_command('refresh_prods')
+        
+        # Test one product has been removed
+        prod_cats = Category.objects.annotate(nb_prods=Count('product'))
+        for cat in prod_cats:
+            if cat.name == "Catégorie 1":
+                # First category : 2 products expected
+                self.assertEqual(cat.nb_prods, 2)
+                prod_list = Product.objects.filter(category=cat)
+                self.assertEqual(len(prod_list), 2)
+            elif cat.name == "Catégorie 2":
+                # Second category : no change (1 product expected)
+                self.assertEqual(cat.nb_prods, 1)
