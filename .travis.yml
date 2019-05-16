@@ -1,7 +1,7 @@
 dist: xenial
 language: python
-pyhton:
-  - '3.7'
+python:
+  - "3.7"
 
 
 # safelist
