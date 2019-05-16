@@ -11,9 +11,12 @@ from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage
 
 import requests
+import logging
 
 from .models import Category, Product, UserProduct
 from .forms import UserForm, UserCreateForm
+
+logger = logging.getLogger(__name__)
 
 class ProductDetail(DetailView):
     model = Product
@@ -173,6 +176,10 @@ def my_substitutes(request, page=1):
         paginator = Paginator(init_substitute_list, 6)
         substitute_list = paginator.get_page(page)
 
+    logger.info('Nouveau produit enregistré', exc_info=True, extra={
+        'request': request,
+    })
+    
     return render(request, 'purbeurre/my_substitutes.html', locals())
 
 # Create user view
