@@ -2,6 +2,8 @@ language: python
 pyhton:
   - '3.7'
 
+dist: xenial
+
 # safelist
 branches:
   only:
