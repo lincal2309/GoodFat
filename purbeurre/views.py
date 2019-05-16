@@ -152,6 +152,10 @@ def save_substitute(request, page=1):
     if created:
         obj.save()
 
+    logger.info('Nouveau produit enregistré', exc_info=True, extra={
+        'request': request,
+    })
+    
     return redirect('purbeurre:substitutes', code=product.code, page=page)
 
 
@@ -176,10 +180,6 @@ def my_substitutes(request, page=1):
         paginator = Paginator(init_substitute_list, 6)
         substitute_list = paginator.get_page(page)
 
-    logger.info('Nouveau produit enregistré', exc_info=True, extra={
-        'request': request,
-    })
-    
     return render(request, 'purbeurre/my_substitutes.html', locals())
 
 # Create user view
