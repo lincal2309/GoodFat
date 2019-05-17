@@ -4,9 +4,11 @@ from django.db import models
 from django.shortcuts import get_list_or_404, get_object_or_404
 
 import requests
+import logging
 
 from purbeurre.models import Category, Product
 
+logger = logging.getLogger(__name__)
 
 class Command(BaseCommand):
     """
@@ -94,3 +96,5 @@ class Command(BaseCommand):
                             product_list.append((new_product.code, new_product.name, new_product.description))
                             
                             new_product.save()
+
+        logger.info('Produits mis à jours', exc_info=True)
