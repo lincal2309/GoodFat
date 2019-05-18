@@ -97,4 +97,4 @@ class Command(BaseCommand):
                             
                             new_product.save()
 
-        logger.info('Produits mis à jours', exc_info=True)
+        logger.info('Produits mis à jour', exc_info=True)
