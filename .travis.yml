@@ -8,6 +8,7 @@ python:
 branches:
   only:
     - staging
+    - bug0012
 
 # Install pipenv then run it to install Pipfile dependencies
 before_script:

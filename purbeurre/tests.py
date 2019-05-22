@@ -334,9 +334,11 @@ class TestSubstitutes(TestCase):
         self.assertQuerysetEqual(response.context['search_list'], ['<Product: Produit 40>'])
         self.assertEqual(response.context['search_list'][0].code, '40')
         self.assertEqual(response.context['nb_products'], 9)
+        # Correction due to bug #0012 : order changed
+        print(response.context['substitute_list'].object_list)
         self.assertQuerysetEqual(response.context['substitute_list'].object_list,
-            ['<Product: Produit 1>', '<Product: Produit 2>', '<Product: Produit 3>',
-            '<Product: Produit 4>', '<Product: Produit 5>', '<Product: Produit 6>'])
+            ['<Product: Produit 1>', '<Product: Produit 3>', '<Product: Produit 5>',
+            '<Product: Produit 10>', '<Product: Produit 30>', '<Product: Produit 2>'])
         self.assertEqual(response.context['substitute_list'].number, 1)
 
     def test_display_second_page(self):
@@ -346,7 +348,7 @@ class TestSubstitutes(TestCase):
         self.assertEqual(response.context['product'].code, '40')
         self.assertEqual(response.context['nb_products'], 9)
         self.assertQuerysetEqual(response.context['substitute_list'].object_list,
-            ['<Product: Produit 10>', '<Product: Produit 30>', '<Product: Produit 20>'])
+            ['<Product: Produit 4>', '<Product: Produit 6>', '<Product: Produit 20>'])
         self.assertEqual(response.context['substitute_list'].number, 2)
 
 

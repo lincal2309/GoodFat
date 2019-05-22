@@ -130,7 +130,7 @@ def substitutes(request, code='', page=1):
         product = get_list_or_404(Product, code=code)[0]
     # Gets the first product corresponding to search words
     # Could be enhanced in proposing a list of products before looking for substitutes
-    init_substitute_list = get_list_or_404(Product.objects.order_by('nutrition_score'), \
+    init_substitute_list = get_list_or_404(Product.objects.order_by('nutrition_grade', 'nutrition_score'), \
         category=product.category, nutrition_score__lt=product.nutrition_score)
 
     # Number of products to be displayed in the header
