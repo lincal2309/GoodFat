@@ -13,6 +13,8 @@ from django.core.paginator import Paginator, EmptyPage
 import requests
 import logging
 
+import wikipediaapi
+
 from .models import Category, Product, UserProduct
 from .forms import UserForm, UserCreateForm
 
@@ -21,6 +23,27 @@ logger = logging.getLogger(__name__)
 class ProductDetail(DetailView):
     model = Product
     template_name = 'purbeurre/product.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # wiki_url = "https://fr.wikipedia.org/w/api.php"
+        # wiki_querystring = {"action": "query", "list": "search", "srsearch": context["product"].brand,
+        #     "utf8": "", "format": "json"}
+        # wiki_req = requests.get(wiki_url, params=wiki_querystring)
+        # print(wiki_req.url)
+        # if wiki_req.json()["query"]["searchinfo"]["totalhits"] > 0:
+        #     context["wiki_snippet"] = wiki_req.json()["query"]["search"][0]["snippet"]
+        
+        context["wiki_snippet"] = ""
+        wiki = wikipediaapi.Wikipedia('fr')
+        if wiki.page(context["product"].brand).exists:
+            wiki_page = wiki.page(context["product"].brand)
+            cats = wiki_page.categories
+            print(cats)
+            context["wiki_snippet"] = wiki_page.summary[0:100]
+        
+        return context
+
 
 
 # View for home page
@@ -70,6 +93,9 @@ def home(request):
 
                     if not doublon:
                         if is_new:
+                            brand = product_attributes["brands"]
+                            if "," in brand:
+                                brand = brand[:brand.index(",")]
                             # For each attribute, test if it exists
                             ingredients = ""
                             sugars = calcium = fat = None
@@ -89,7 +115,7 @@ def home(request):
                             # Add values in database
                             new_product = Product(code=product_code, name=product_name, \
                                         description=product_attributes["ingredients_text_with_allergens"], \
-                                        ingredients=ingredients, \
+                                        brand = brand, ingredients=ingredients, \
                                         nutrition_score=int(product_attributes["nutriments"]["nutrition-score-fr_100g"]), \
                                         nutrition_grade=product_attributes["nutrition_grade_fr"], \
                                         off_url=product_attributes["url"], img_url=product_attributes["image_url"], \

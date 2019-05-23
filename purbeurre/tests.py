@@ -716,3 +716,135 @@ class TestRefreshProds(TestCase):
             elif cat.name == "Catégorie 2":
                 # Second category : no change (1 product expected)
                 self.assertEqual(cat.nb_prods, 1)
+
+class TestProductDetail(TestCase):
+    @mock.patch('requests.get')
+    def test_display_product_detail(self, mock_get_off):
+        # Check product's detail display :
+        #   - data get from Wikipedia API
+
+        mock_response = mock.Mock()
+
+        # Expected data returned from API
+        expected_result = {
+            "batchcomplete": "",
+            "continue": {
+                "sroffset": 10,
+                "continue": "-||"
+            },
+            "query": {
+                "searchinfo": {
+                    "totalhits": 42
+                },
+                "search": [
+                    {
+                        "ns": 0,
+                        "title": "Badoit",
+                        "pageid": 741978,
+                        "size": 12599,
+                        "wordcount": 1329,
+                        "snippet": "<span class=\"searchmatch\">Badoit</span> est une marque d'eau minérale naturellement gazeuse appartenant à la société des Eaux Minérales d'Evian filiale de Danone. Sa source se situe à",
+                        "timestamp": "2019-04-25T12:03:32Z"
+                    },
+                    {
+                        "ns": 0,
+                        "title": "Thierry Marx",
+                        "pageid": 1771374,
+                        "size": 20023,
+                        "wordcount": 2171,
+                        "snippet": "du cuisine nomade ». En septembre 2012, il organise en partenariat avec <span class=\"searchmatch\">Badoit</span> un repas gastronomique dans le RER C. Ce sont 400 personnes qui vont déguster",
+                        "timestamp": "2019-04-22T16:41:33Z"
+                    },
+                    {
+                        "ns": 0,
+                        "title": "Fu'ad Aït Aattou",
+                        "pageid": 6508823,
+                        "size": 6899,
+                        "wordcount": 704,
+                        "snippet": "Saint Laurent &quot;Cinéma&quot; 2010 : T.L (clip de Micky Green) 2015 : Publicité <span class=\"searchmatch\">Badoit</span> ↑ The Last Mistress, An Interview with Catherine Breillat ↑ [1] ↑ http://www",
+                        "timestamp": "2019-05-21T00:05:34Z"
+                    },
+                    {
+                        "ns": 0,
+                        "title": "Saint-Galmier",
+                        "pageid": 63292,
+                        "size": 17827,
+                        "wordcount": 1241,
+                        "snippet": "été vérifié par la découverte de thermes romains non loin de la source <span class=\"searchmatch\">Badoit</span>. À l'époque, on suppose que la ville se nommait Vicus Auditiacus. Désormais",
+                        "timestamp": "2019-05-18T09:28:41Z"
+                    },
+                    {
+                        "ns": 0,
+                        "title": "Y'a d'la joie",
+                        "pageid": 3058935,
+                        "size": 7362,
+                        "wordcount": 735,
+                        "snippet": "Atlen, 1996 (ISBN 2-7312-1938-6), p. 53. ↑ Jean Watin-Augouard, « Saga <span class=\"searchmatch\">Badoit</span> : <span class=\"searchmatch\">Badoit</span>, pétille de joie », Revue des marques, Prodimarques, no 42,\u200e avril",
+                        "timestamp": "2019-03-04T20:04:30Z"
+                    },
+                    {
+                        "ns": 0,
+                        "title": "Inès Longevial",
+                        "pageid": 11725635,
+                        "size": 5298,
+                        "wordcount": 481,
+                        "snippet": "même année, elle est choisie pour designer la nouvelle bouteille Evian et <span class=\"searchmatch\">Badoit</span> en édition limitée avec l'agence BETC. En 2019, elle organise sa première",
+                        "timestamp": "2019-05-04T09:07:38Z"
+                    },
+                    {
+                        "ns": 0,
+                        "title": "Diarrhée",
+                        "pageid": 150374,
+                        "size": 18857,
+                        "wordcount": 2142,
+                        "snippet": "magnésium : Rozana (160 mg/L), Hépar (119 mg/L), Gérolsteiner (108 mg/L), <span class=\"searchmatch\">Badoit</span> (85 mg/L), Contrex (84 mg/L), Quézac (69 mg/L), Courmayeur (52 mg/L). Une",
+                        "timestamp": "2019-05-10T20:03:45Z"
+                    },
+                    {
+                        "ns": 0,
+                        "title": "Évian (eau minérale)",
+                        "pageid": 933236,
+                        "size": 19259,
+                        "wordcount": 1830,
+                        "snippet": "la source Cachat est reconnue d’intérêt public. 1960, association avec <span class=\"searchmatch\">Badoit</span>. 1964, entrée du groupe BSN, futur Danone, à hauteur de 25 % dans le capital",
+                        "timestamp": "2019-01-08T11:34:35Z"
+                    },
+                    {
+                        "ns": 0,
+                        "title": "Adoucissement de l'eau",
+                        "pageid": 595678,
+                        "size": 21461,
+                        "wordcount": 2350,
+                        "snippet": "Salvetat 5 Vittel 5,2 Evian 6,5 Contrex 9,4 Perrier 9,5 Volvic 12 Hépar 14,2 San Pellegrino 33,3 Quézac 110 <span class=\"searchmatch\">Badoit</span> 180 Vichy Célestin 1172 St Yorre 1708",
+                        "timestamp": "2019-05-04T07:42:47Z"
+                    },
+                    {
+                        "ns": 0,
+                        "title": "L'Aziza",
+                        "pageid": 2295147,
+                        "size": 15786,
+                        "wordcount": 1613,
+                        "snippet": "Chavarot. Deux placements sont effectués dans le clip : la bouteille de <span class=\"searchmatch\">Badoit</span> à 2:18 et Philips à 2:33. Quant à la guitare lancée par Balavoine dans les",
+                        "timestamp": "2019-04-18T16:49:36Z"
+                    }
+                ]
+            }
+        }
+        #  Response data from mock
+        mock_response.json.return_value = expected_result
+        mock_response.status_code = 200
+        #  Response from fake API
+        mock_get_off.return_value = mock_response
+
+        # Load fake data into database to test first features of the view
+        c1 = Category.objects.create(name="Catégorie 1", used=True)     # Used category with 1 product : 2 products expected
+
+        Product.objects.create(code=1, name="Produit 1", description="Description du produit 1",
+            ingredients="Ingrédients du produit 1", nutrition_score = 1, nutrition_grade="a",
+            img_url="http://img.produit1.off.fr/1", off_url="http://code.produit1.off.fr/1",
+            brand='Badoit', category=c1)
+
+        response = self.client.get('/substitute/1')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.context["product"].name, 'Produit 1')
+        self.assertEqual(response.context["wiki_snippet"], '<span class="searchmatch">Badoit</span> est une marque d\'eau minérale naturellement gazeuse appartenant à la société des Eaux Minérales d\'Evian filiale de Danone. Sa source se situe à')

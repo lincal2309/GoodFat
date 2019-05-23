@@ -18,6 +18,7 @@ class Product(models.Model):
     code = models.CharField(max_length=50)
     name = models.CharField(max_length=150)
     description = models.TextField()
+    brand = models.CharField(max_length=50)
     ingredients = models.TextField(null=True)
     nutrition_score = models.IntegerField()
     nutrition_grade = models.CharField(max_length=1)

@@ -66,6 +66,9 @@ class Command(BaseCommand):
 
                     if not doublon:
                         if is_new:
+                            brand = product_attributes["brands"]
+                            if "," in brand:
+                                brand = brand[:brand.index(",")]
                             # For each attribute, test if it exists
                             ingredients = ""
                             sugars = calcium = fat = None
@@ -85,7 +88,7 @@ class Command(BaseCommand):
                             # Add values in database
                             new_product = Product(code=product_code, name=product_name, \
                                         description=product_attributes["ingredients_text_with_allergens"], \
-                                        ingredients=ingredients, \
+                                        brand = brand, ingredients=ingredients, \
                                         nutrition_score=int(product_attributes["nutriments"]["nutrition-score-fr_100g"]), \
                                         nutrition_grade=product_attributes["nutrition_grade_fr"], \
                                         off_url=product_attributes["url"], img_url=product_attributes["image_url"], \
