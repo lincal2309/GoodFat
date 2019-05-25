@@ -37,10 +37,14 @@ class ProductDetail(DetailView):
         context["wiki_snippet"] = ""
         wiki = wikipediaapi.Wikipedia('fr')
         if wiki.page(context["product"].brand).exists:
-            wiki_page = wiki.page(context["product"].brand)
-            cats = wiki_page.categories
-            print(cats)
-            context["wiki_snippet"] = wiki_page.summary[0:100]
+            wiki_html = wikipediaapi.Wikipedia(language='fr',
+                extract_format=wikipediaapi.ExtractFormat.HTML)
+            wiki_page_html = wiki_html.page(context["product"].brand)
+            wiki_page_summary = wiki_page_html.text
+            if '<h2>' in wiki_page_summary:
+                wiki_page_summary = wiki_page_html.text[:wiki_page_html.text.index("<h2>")]
+            
+            context["wiki_snippet"] = wiki_page_summary
         
         return context
 

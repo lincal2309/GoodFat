@@ -8,7 +8,7 @@ python:
 branches:
   only:
     - staging
-    # - evol0042
+    - evol0042
 
 # Install pipenv then run it to install Pipfile dependencies
 before_script:

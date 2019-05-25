@@ -46,11 +46,13 @@
 
         <div class="row justify-content-center text-center mt-5">
             <div class="col-md-6">
+                <p class="lsv">Le saviez-vous ?</p>
                 {% if wiki_snippet %}
-                    <p>Le saviez-vous ?</p>
                     {% autoescape off %}
-                        {{ wiki_snippet }}
+                    {{ wiki_snippet }}
                     {% endautoescape %}
+                {% else %}
+                    <p>La marque <span>{{ product.brand }}</span> n'a pas encore de page dédiée sur Wikipedia !</p>
                 {% endif %}
             </div>
         </div>
