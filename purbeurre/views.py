@@ -26,14 +26,6 @@ class ProductDetail(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # wiki_url = "https://fr.wikipedia.org/w/api.php"
-        # wiki_querystring = {"action": "query", "list": "search", "srsearch": context["product"].brand,
-        #     "utf8": "", "format": "json"}
-        # wiki_req = requests.get(wiki_url, params=wiki_querystring)
-        # print(wiki_req.url)
-        # if wiki_req.json()["query"]["searchinfo"]["totalhits"] > 0:
-        #     context["wiki_snippet"] = wiki_req.json()["query"]["search"][0]["snippet"]
-        
         context["wiki_snippet"] = ""
         wiki = wikipediaapi.Wikipedia('fr')
         if wiki.page(context["product"].brand).exists:
